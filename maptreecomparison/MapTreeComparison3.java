@@ -30,27 +30,25 @@ public class MapTreeComparison3 { // Range Search의 경우
 		int targetValue = 500000;
 
 		// self-balancing tree를 활용한 range search
-		// headMap method 활용: a view of the portion of the map whose keys are strictly
-		// less than the target value.(시간: O(log n))
-		long startTime = System.currentTimeMillis();	// record the current system time in milliseconds
-		SortedMap<Integer, Integer> treeRangeMap = treeMap.headMap(targetValue);	// // get a sub-map of the self-balancing tree with keys less than targetValue
+		// headMap method 활용: 첫 엘리먼트에서 targetValue 범위 안에 속한 객체를 반환(시간: O(log n))
+		long startTime = System.currentTimeMillis();	
+		SortedMap<Integer, Integer> treeRangeMap = treeMap.headMap(targetValue);	
 		long endTime = System.currentTimeMillis();
 		System.out.println("Time to perform range search on self-balancing tree: " + (endTime - startTime) + "ms");	// print out the time taken to perform the range search on the self-balancing tree
-		System.out.println("Number of items found: " + treeRangeMap.size());	// print out the number of items found in the sub-map
+		System.out.println("Number of items found: " + treeRangeMap.size());	// sub-map(두 개의 숫자를 입력해서 그 사이의 객체 반환)
 
 		// Using hashmap for range search
-		// 맵의 모든 key-value pairs에 대해 읽어내길 반복하는 방식: targetValue보다 작은 값일 때 해당 키를 list에
-		// 추가(시간: O(n))
+		// 맵의 모든 key-value pairs에 대해 읽어내길 반복하는 방식: targetValue보다 작은 값일 때 해당 키를 list에 추가(시간: O(n))
 		startTime = System.currentTimeMillis();
 		List<Integer> hashRangeList = new ArrayList<>();
-		for (Map.Entry<Integer, Integer> entry : hashMap.entrySet()) {	// iterate over the key-value pairs in the hashmap
-			if (entry.getValue() < targetValue) {	// check if the value of the current key-value pair is less than the target value
-				hashRangeList.add(entry.getKey());	// add the key to the ArrayList if it satisfies the condition
+		for (Map.Entry<Integer, Integer> entry : hashMap.entrySet()) {	// iterate key-value pairs
+			if (entry.getValue() < targetValue) {	// check if the value of the current key-value pair가 target value보다 작은 경우
+				hashRangeList.add(entry.getKey());	// 조건을 만족하면 키 삽입
 			}
 		}
 		endTime = System.currentTimeMillis();
-		System.out.println("Time to perform range search on hashmap: " + (endTime - startTime) + "ms");	// print out the time taken to perform the range search on the hashmap
-		System.out.println("Number of items found: " + hashRangeList.size());	// print out the number of items found in the ArrayList
+		System.out.println("Time to perform range search on hashmap: " + (endTime - startTime) + "ms");	//  hashmap으로 range search 시간
+		System.out.println("Number of items found: " + hashRangeList.size());	// ArrayList에서 찾은 값
 	}
 
 }
