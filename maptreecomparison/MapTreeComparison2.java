@@ -5,41 +5,47 @@ import java.util.Random;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-public class MapTreeComparison2 {	//  일반적으로 hashmap이 self-balancing tree보다 실행시간이 빠름을 보여주는 예시. 
+public class MapTreeComparison2 {	//  일반적인 탐색 예시 
 	//hashmap: 해시 함수를 사용하여 메모리에서 키-값 쌍의 위치를 계산
-	// self-balancing tree: 노드를 탐색하며 트리를 지남
+	// self-balancing tree: 노드를 탐색
 	public static void main(String[] args) {
-		int numItems = 1000000;
-		Random rand = new Random();
+		int numItems = 100000; // 랜덤으로 생성하는 숫자 개수
+		Random random = new Random();
+		int targetValue = 50000; // 찾고자 하는 값
 
-		// Using a self-balancing tree to store key-value pairs
+		// self-balancing tree
 		SortedMap<Integer, Integer> treeMap = new TreeMap<>();
 		long startTime = System.currentTimeMillis();
 		for (int i = 0; i < numItems; i++) {
-			treeMap.put(rand.nextInt(numItems), i);
+			treeMap.put(random.nextInt(100000), i);	// 100000까지의 숫자중에서 찾기
 		}
 		long endTime = System.currentTimeMillis();
-		System.out.println(
-				"Time to insert " + numItems + " items into self-balancing tree: " + (endTime - startTime) + "ms");
+
+		System.out.println("= 접근시간테스트 =");
+		System.out.println("랜덤으로 생성하는 숫자 개수: " + numItems);
+		System.out.println(" self-balancing tree 기준: " + numItems + "개의 데이터를 삽입하는 시간은 " + (endTime - startTime) + "ms");
 
 		startTime = System.currentTimeMillis();
-		treeMap.get(rand.nextInt(numItems));
+		boolean foundInTree = treeMap.containsValue(targetValue);
 		endTime = System.currentTimeMillis();
-		System.out.println("Lookup time for self-balancing tree: " + (endTime - startTime) + "ms");
+		System.out.println(" self-balancing tree 기준: " + numItems + "개의 데이터를 탐색하는 시간은 " + (endTime - startTime) + "ms");
+		System.out.println("탐색 성공 여부: " + foundInTree);
+		System.out.println();
+		
 
-		// Using a hashmap to store key-value pairs
+		// hashmap
 		HashMap<Integer, Integer> hashMap = new HashMap<>();
 		startTime = System.currentTimeMillis();
 		for (int i = 0; i < numItems; i++) {
-			hashMap.put(rand.nextInt(numItems), i);
+			hashMap.put(random.nextInt(100000), i);
 		}
 		endTime = System.currentTimeMillis();
-		System.out.println("Time to insert " + numItems + " items into hashmap: " + (endTime - startTime) + "ms");
-
+		System.out.println(" hashmap 기준: " + numItems + "개의 데이터를 삽입하는 시간은 " + (endTime - startTime) + "ms");
 		startTime = System.currentTimeMillis();
-		hashMap.get(rand.nextInt(numItems));
+		boolean foundInHash = hashMap.containsValue(targetValue);
 		endTime = System.currentTimeMillis();
-		System.out.println("Lookup time for hashmap: " + (endTime - startTime) + "ms");
+		System.out.println(" hashmap 기준: " + numItems + "개의 데이터를 탐색하는 시간은 " + (endTime - startTime) + "ms");
+		System.out.println("탐색 성공 여부: " + foundInHash);
 	}
 
 }
