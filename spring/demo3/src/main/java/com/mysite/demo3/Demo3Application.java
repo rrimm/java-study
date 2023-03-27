@@ -1,13 +1,13 @@
-package com.mysite.springtest02;
+package com.mysite.demo3;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Springtest02Application {
+public class Demo3Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Springtest02Application.class, args);
+		SpringApplication.run(Demo3Application.class, args);
 	}
 
 }
